@@ -18,13 +18,22 @@ function padWithZeros(soundex) {
     return soundex;
 }
 
+function isDuplicateOrZero(code, prevCode) {
+    return code === '0' || code === prevCode;
+}
+
+function processCharacter(char, prevCode) {
+    let code = getSoundexCode(char);
+    return { code, isValid: !isDuplicateOrZero(code, prevCode) };
+}
+
 function removeDuplicatesAndZeros(name) {
     let soundex = [name[0].toUpperCase()];
     let prevCode = getSoundexCode(name[0]);
 
     for (let i = 1; i < name.length && soundex.length < 4; i++) {
-        let code = getSoundexCode(name[i]);
-        if (code !== '0' && code !== prevCode) {
+        let { code, isValid } = processCharacter(name[i], prevCode);
+        if (isValid) {
             soundex.push(code);
         }
         prevCode = code;
