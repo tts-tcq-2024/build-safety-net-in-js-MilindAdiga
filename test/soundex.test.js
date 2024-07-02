@@ -11,6 +11,11 @@ describe('Soundex Algorithm', () => {
         it('should handle single characters', () => {
             expect(generateSoundex("A")).to.equal("A000");
         });
+
+        it('should pad with zeros if the result is less than 4 characters', () => {
+            expect(generateSoundex('Jo')).to.equal('J000');
+            expect(generateSoundex('Li')).to.equal('L000');
+        });
     });
 
     describe('getSoundexCode', () => {
