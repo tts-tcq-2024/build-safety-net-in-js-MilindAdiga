@@ -3,6 +3,22 @@ const { generateSoundex, getSoundexCode } = require('../src/soundex');
 
 describe('Soundex Algorithm', () => {
 
+    describe('generateSoundex', () => {
+        it('should handle empty strings', () => {
+            expect(generateSoundex("")).to.equal("");
+        });
+
+        it('should handle single characters', () => {
+            expect(generateSoundex("A")).to.equal("A000");
+        });
+
+        it('should handle names with repeating letters', () => {
+            expect(generateSoundex('Jackson')).to.equal('J250');
+            expect(generateSoundex('Tymczak')).to.equal('T522');
+        });
+
+    });
+
     describe('getSoundexCode', () => {
         it('should return the correct Soundex code for consonants', () => {
             expect(getSoundexCode('B')).to.equal('1');
@@ -23,21 +39,5 @@ describe('Soundex Algorithm', () => {
             expect(getSoundexCode('W')).to.equal('0');
             expect(getSoundexCode('Y')).to.equal('0');
         });
-    });
-
-    describe('generateSoundex', () => {
-        it('should handle empty strings', () => {
-            expect(generateSoundex("")).to.equal("");
-        });
-
-        it('should handle single characters', () => {
-            expect(generateSoundex("A")).to.equal("A000");
-        });
-
-        it('should handle names with repeating letters', () => {
-            expect(generateSoundex('Jackson')).to.equal('J250');
-            expect(generateSoundex('Tymczak')).to.equal('T522');
-        });
-
     });
 });
