@@ -18,13 +18,9 @@ function padWithZeros(soundex) {
     return soundex;
 }
 
-function isDuplicateOrZero(code, prevCode) {
-    return code === '0' || code === prevCode;
-}
-
 function processCharacter(char, prevCode) {
     let code = getSoundexCode(char);
-    return { code, isValid: !isDuplicateOrZero(code, prevCode) };
+    return { code, isValid: code !== '0' && code !== prevCode };
 }
 
 function removeDuplicatesAndZeros(name) {
