@@ -24,14 +24,24 @@ function processCharacter(char, prevCode) {
 }
 
 function removeDuplicatesAndZeros(name) {
-    const initialSoundex = [name[0].toUpperCase()];
-    const filteredSoundex = name.slice(1)
-        .map((char, index) => processCharacter(char, getSoundexCode(name[index])))
-        .filter(({ isValid }) => isValid)
-        .map(({ code }) => code);
-
-    return initialSoundex.concat(filteredSoundex).slice(0, 4);
+    name = typeof name === 'string' ? name.toUpperCase() : name;
+    let soundex = [name[0]];
+    const characters = typeof name === 'string' ? name.slice(1).split('') : name.slice(1);
+    let prevCode = getSoundexCode(name[0]);
+    for (let i = 0; i < characters.length && soundex.length < 4; i++) {
+        let code = getSoundexCode(characters[i]);
+        if (code !== '0' && code !== prevCode) {
+            soundex.push(code);
+        }
+        prevCode = code;
+    }
+    
+    while (soundex.length < 4) {
+        soundex.push('0');
+    }
+    return soundex;
 }
+
 
 function generateSoundex(name) {
     if (!name) return '';
