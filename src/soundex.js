@@ -12,7 +12,7 @@ function getSoundexCode(char) {
 }
 
 function padWithZeros(soundex) {
-    while (soundex.length < 3) {
+    while (soundex.length < 4) {
         soundex.push('0');
     }
     return soundex;
@@ -24,18 +24,13 @@ function processCharacter(char, prevCode) {
 }
 
 function removeDuplicatesAndZeros(name) {
-    let soundex = [name[0].toUpperCase()];
-    let prevCode = getSoundexCode(name[0]);
+    const initialSoundex = [name[0].toUpperCase()];
+    const filteredSoundex = name.slice(1)
+        .map((char, index) => processCharacter(char, getSoundexCode(name[index])))
+        .filter(({ isValid }) => isValid)
+        .map(({ code }) => code);
 
-    for (let i = 1; i < name.length && soundex.length < 3; i++) {
-        let { code, isValid } = processCharacter(name[i], prevCode);
-        if (isValid) {
-            soundex.push(code);
-        }
-        prevCode = code;
-    }
-
-    return soundex;
+    return initialSoundex.concat(filteredSoundex).slice(0, 4);
 }
 
 function generateSoundex(name) {
