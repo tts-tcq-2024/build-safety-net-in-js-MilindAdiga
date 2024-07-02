@@ -21,19 +21,18 @@ function padWithZeros(soundex) {
 function removeDuplicatesAndZeros(name) {
     name = typeof name === 'string' ? name.toUpperCase() : name;
     let soundex = [name[0]];
-    const characters = typeof name === 'string' ? name.slice(1).split('') : name.slice(1);
     let prevCode = getSoundexCode(name[0]);
-    for (let i = 0; i < characters.length && soundex.length < 4; i++) {
-        let code = getSoundexCode(characters[i]);
+    for (let i = 1; i < name.length && soundex.length < 4; i++) {
+        const code = getSoundexCode(name[i]);
         if (code !== '0' && code !== prevCode) {
             soundex.push(code);
+            prevCode = code; 
         }
-        prevCode = code;
     }
-    
     while (soundex.length < 4) {
         soundex.push('0');
     }
+
     return soundex;
 }
 
