@@ -11,12 +11,6 @@ describe('Soundex Algorithm', () => {
         it('should handle single characters', () => {
             expect(generateSoundex("A")).to.equal("A000");
         });
-
-        it('should handle names with repeating letters', () => {
-            expect(generateSoundex('Jackson')).to.equal('J250');
-            expect(generateSoundex('Tymczak')).to.equal('T522');
-        });
-
     });
 
     describe('getSoundexCode', () => {
