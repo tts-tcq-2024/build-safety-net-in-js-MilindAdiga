@@ -18,11 +18,6 @@ function padWithZeros(soundex) {
     return soundex;
 }
 
-function processCharacter(char, prevCode) {
-    let code = getSoundexCode(char);
-    return { code, isValid: code !== '0' && code !== prevCode };
-}
-
 function removeDuplicatesAndZeros(name) {
     name = typeof name === 'string' ? name.toUpperCase() : name;
     let soundex = [name[0]];
