@@ -32,10 +32,12 @@ function generateSoundex(name) {
 
     for (let i = 1; i < name.length; i++) {
         const code = getSoundexCode(name[i]);
-        codes.push(code);
+        if (code !== '0' && code !== codes[codes.length - 1]) {
+            codes.push(code);
+        }
     }
 
-    codes = removeDuplicatesAndZeros(codes).slice(0, 4);
+    codes = codes.slice(0, 4);
     codes = padSoundexCodes(codes);
 
     return codes.join('');
