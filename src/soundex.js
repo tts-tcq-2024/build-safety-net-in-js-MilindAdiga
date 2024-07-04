@@ -10,30 +10,36 @@ function getSoundexCode(char) {
     return soundexDict[char.toUpperCase()] || '0';
 }
 
+function removeDuplicatesAndZeros(codes) {
+    return codes.filter((code, index) => {
+        if (index === 0) return true;
+        return code !== '0' && code !== codes[index - 1];
+    });
+}
+
 function generateSoundex(name) {
     if (!name) return '';
 
     const firstChar = name.charAt(0).toUpperCase();
-    let soundex = [firstChar];
+    let codes = [firstChar];
     let prevCode = getSoundexCode(firstChar);
 
-    for (let i = 1; i < name.length && soundex.length < 4; i++) {
+    for (let i = 1; i < name.length; i++) {
         const code = getSoundexCode(name[i]);
-        if (code !== '0' && code !== prevCode) {
-            soundex.push(code);
-        }
-        if (code !== '0') {
-            prevCode = code;
-        }
+        codes.push(code);
     }
 
-    while (soundex.length < 4) {
-        soundex.push('0');
+    codes = removeDuplicatesAndZeros(codes).slice(0, 4);
+
+    while (codes.length < 4) {
+        codes.push('0');
     }
 
-    return soundex.join('');
+    return codes.join('');
 }
 
 module.exports = {
-    generateSoundex
+    generateSoundex,
+    getSoundexCode,
+    removeDuplicatesAndZeros
 };
