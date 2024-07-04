@@ -17,6 +17,13 @@ function removeDuplicatesAndZeros(codes) {
     });
 }
 
+function padSoundexCodes(codes) {
+    while (codes.length < 4) {
+        codes.push('0');
+    }
+    return codes;
+}
+
 function generateSoundex(name) {
     if (!name) return '';
 
@@ -29,10 +36,7 @@ function generateSoundex(name) {
     }
 
     codes = removeDuplicatesAndZeros(codes).slice(0, 4);
-
-    while (codes.length < 4) {
-        codes.push('0');
-    }
+    codes = padSoundexCodes(codes);
 
     return codes.join('');
 }
@@ -40,5 +44,6 @@ function generateSoundex(name) {
 module.exports = {
     generateSoundex,
     getSoundexCode,
-    removeDuplicatesAndZeros
+    removeDuplicatesAndZeros,
+    padSoundexCodes
 };
