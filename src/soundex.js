@@ -10,42 +10,23 @@ function getSoundexCode(char) {
     return soundexDict[char.toUpperCase()] || '0';
 }
 
-function removeDuplicatesAndZeros(codes) {
-    return codes.filter((code, index) => {
-        if (index === 0) return true;
-        return code !== '0' && code !== codes[index - 1];
-    });
-}
-
-function padSoundexCodes(codes) {
-    while (codes.length < 4) {
-        codes.push('0');
-    }
-    return codes;
-}
-
 function generateSoundex(name) {
     if (!name) return '';
 
     const firstChar = name.charAt(0).toUpperCase();
-    let codes = [firstChar];
+    const soundex = [firstChar];
 
-    for (let i = 1; i < name.length; i++) {
-        const code = getSoundexCode(name[i]);
-        if (code !== '0' && code !== codes[codes.length - 1]) {
-            codes.push(code);
-        }
-    }
+    const soundexCodes = Array.from(name.substr(1))
+        .map(char => getSoundexCode(char))
+        .filter((code, index, arr) => code !== '0' && code !== getSoundexCode(arr[index - 1]));
 
-    codes = codes.slice(0, 4);
-    codes = padSoundexCodes(codes);
+    const paddedSoundex = soundex.concat(soundexCodes.slice(0, 3)) 
+        .concat(Array(4).fill('0'))
+        .slice(0, 4);
 
-    return codes.join('');
+    return paddedSoundex.join('');
 }
 
 module.exports = {
-    generateSoundex,
-    getSoundexCode,
-    removeDuplicatesAndZeros,
-    padSoundexCodes
+    generateSoundex
 };
