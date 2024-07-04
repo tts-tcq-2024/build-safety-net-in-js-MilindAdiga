@@ -14,17 +14,24 @@ function generateSoundex(name) {
     if (!name) return '';
 
     const firstChar = name.charAt(0).toUpperCase();
-    const soundex = [firstChar];
+    let soundex = [firstChar];
+    let prevCode = getSoundexCode(firstChar);
 
-    const soundexCodes = Array.from(name.substr(1))
-        .map(char => getSoundexCode(char))
-        .filter((code, index, arr) => code !== '0' && code !== arr[index - 1]);
+    for (let i = 1; i < name.length && soundex.length < 4; i++) {
+        const code = getSoundexCode(name[i]);
+        if (code !== '0' && code !== prevCode) {
+            soundex.push(code);
+        }
+        if (code !== '0') {
+            prevCode = code;
+        }
+    }
 
-    const paddedSoundex = soundex.concat(soundexCodes.slice(0, 3))
-        .concat(Array(4).fill('0'))
-        .slice(0, 4);
+    while (soundex.length < 4) {
+        soundex.push('0');
+    }
 
-    return paddedSoundex.join('');
+    return soundex.join('');
 }
 
 module.exports = {
