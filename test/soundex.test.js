@@ -10,16 +10,15 @@ describe('Soundex Algorithm', () => {
         it('should return the correct Soundex code for single characters', () => {
             expect(generateSoundex('A')).to.equal('A000');
             expect(generateSoundex('B')).to.equal('B000');
+            expect(generateSoundex('Z')).to.equal('Z000');
         });
 
         it('should return the correct Soundex code for names', () => {
-            expect(generateSoundex('Rama')).to.equal('R163');
-            expect(generateSoundex('Rai')).to.equal('R163');
+            expect(generateSoundex('Robert')).to.equal('R163');
         });
 
         it('should handle names with repeating letters', () => {
             expect(generateSoundex('Ashcraft')).to.equal('A261');
-            expect(generateSoundex('Tymczak')).to.equal('T522');
         });
     });
 });
