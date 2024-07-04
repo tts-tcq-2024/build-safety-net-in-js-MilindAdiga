@@ -22,7 +22,6 @@ function generateSoundex(name) {
 
     const firstChar = name.charAt(0).toUpperCase();
     let codes = [firstChar];
-    let prevCode = getSoundexCode(firstChar);
 
     for (let i = 1; i < name.length; i++) {
         const code = getSoundexCode(name[i]);
