@@ -16,18 +16,17 @@ function generateSoundex(name) {
     const firstChar = name.charAt(0).toUpperCase();
     const soundex = [firstChar];
 
-    const soundexCodes = Array.from(name.substr(1)) 
+    const soundexCodes = Array.from(name.substr(1))
         .map(char => getSoundexCode(char))
-        .filter((code, index, arr) => code !== '0' && code !== getSoundexCode(arr[index - 1])); 
+        .filter((code, index, arr) => code !== '0' && code !== arr[index - 1]);
 
-    const paddedSoundex = soundex.concat(soundexCodes.slice(0, 3)) 
-        .concat(Array(4).fill('0')) 
-        .slice(0, 4); 
+    const paddedSoundex = soundex.concat(soundexCodes.slice(0, 3))
+        .concat(Array(4).fill('0'))
+        .slice(0, 4);
 
     return paddedSoundex.join('');
 }
 
 module.exports = {
-    getSoundexCode,
     generateSoundex
 };
