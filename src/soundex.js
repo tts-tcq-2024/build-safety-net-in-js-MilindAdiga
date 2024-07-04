@@ -18,7 +18,7 @@ function generateSoundex(name) {
 
     const soundexCodes = Array.from(name.substr(1)) 
         .map(char => getSoundexCode(char))
-        .filter((code, index, arr) => code == '0' && code !== getSoundexCode(arr[index - 1])); 
+        .filter((code, index, arr) => code !== '0' && code !== getSoundexCode(arr[index - 1])); 
 
     const paddedSoundex = soundex.concat(soundexCodes.slice(0, 3)) 
         .concat(Array(4).fill('0')) 
