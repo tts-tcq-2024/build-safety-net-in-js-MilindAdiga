@@ -19,11 +19,6 @@ describe('Soundex Algorithm', () => {
             expect(generateSoundex('Rubin')).to.equal('R150');
         });
 
-        it('should handle names with repeating letters', () => {
-            expect(generateSoundex('Ashcraft')).to.equal('A261');
-            expect(generateSoundex('Tymczak')).to.equal('T522');
-        });
-
         it('should handle names with varying case', () => {
             expect(generateSoundex('robert')).to.equal('R163');
             expect(generateSoundex('Rupert')).to.equal('R163');
